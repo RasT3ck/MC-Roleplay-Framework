@@ -49,12 +49,11 @@ public final class MCRPCore {
     private final PermissionStorage permissionStorage;
     private final PermissionManager permissionManager;
 
-    private final EconomyPlayerListener economyPlayerListener;
-    private PlayerDataListener playerDataListener;
+    
 
     private final RegionStorage regionStorage;
     private final RegionManager regionManager;
-    private RegionListener regionListener;
+    
     private final RegionActionManager regionActionManager;
     private final RegionActionStorage regionActionStorage;
     private final ActionManager actionManager;
@@ -83,7 +82,7 @@ public final class MCRPCore {
         this.transactionStorage = new TransactionStorage(databaseManager);
         this.transactionManager = new TransactionManager(transactionStorage);
         this.economyManager = new EconomyManager(accountManager, transactionManager, databaseManager);
-        this.economyPlayerListener = new EconomyPlayerListener(eventBus, accountManager, currencyManager);
+        new EconomyPlayerListener(eventBus, accountManager, currencyManager);
 
         // Job
         this.jobStorage = new JobStorage(databaseManager);
@@ -103,7 +102,7 @@ public final class MCRPCore {
         this.actionManager.register(new CommandActionExecutor());
         this.actionManager.register(new PermissionActionExecutor());
         this.actionManager.register(new EconomyActionExecutor());
-        this.regionListener = new RegionListener(eventBus, regionActionManager, actionManager, permissionManager);
+        new RegionListener(eventBus, regionActionManager, actionManager, permissionManager);
     }
 
     public TaskManager getTaskManager() {
@@ -159,9 +158,7 @@ public final class MCRPCore {
         configManager.loadAll();
     }
 
-    private void loadManagers() {
-
-    }
+    
 
     private void registerModules() {
         ModuleRegistry.getModules().forEach(moduleManager::register);
@@ -182,7 +179,7 @@ public final class MCRPCore {
     public void initialize(java.nio.file.Path worldDirectory) {
 
         this.dataManager = new DataManager(new JsonDataStorage(worldDirectory));
-        this.playerDataListener = new PlayerDataListener(eventBus, dataManager, jobManager, accountManager);
+        new PlayerDataListener(eventBus, dataManager, jobManager, accountManager);
 
         // Configuración
         loadConfigs();

@@ -1,7 +1,6 @@
 package org.rast3ck.mcrp.core.job;
 
 import java.math.BigDecimal;
-import java.util.List;
 import java.util.UUID;
 
 public class Job {
