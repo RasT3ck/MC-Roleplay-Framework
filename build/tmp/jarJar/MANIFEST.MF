@@ -5,5 +5,5 @@ Specification-Version: 1
 Implementation-Title: mc-roleplay-framework
 Implementation-Version: 1.0-SNAPSHOT
 Implementation-Vendor: RasT3ck
-Implementation-Timestamp: 2026-07-10T03:50:01-0600
+Implementation-Timestamp: 2026-07-10T18:14:48-0600
 

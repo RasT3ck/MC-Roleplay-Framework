@@ -1,12 +1,15 @@
 package org.rast3ck.mcrp.core.logger;
 
+import com.mojang.logging.LogUtils;
 import org.rast3ck.mcrp.core.MCRPConstants;
+import org.slf4j.Logger;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
 public final class MCRPLogger {
 
+    private static final Logger LOGGER = LogUtils.getLogger();
     private static final DateTimeFormatter FORMAT =
             DateTimeFormatter.ofPattern("HH:mm:ss");
 
@@ -41,16 +44,25 @@ public final class MCRPLogger {
 
         String time = FORMAT.format(LocalDateTime.now());
 
-        System.out.printf(
-                "[%s] [%s] [%s] %s%n",
-                time,
-                MCRPConstants.MOD_NAME,
-                level,
-                message
-        );
+        String formatted = String.format("[%s] [%s] [%s] %s", time, MCRPConstants.MOD_NAME, level, message);
 
-        if (throwable != null) {
-            throwable.printStackTrace();
+        switch (level) {
+            case DEBUG -> {
+                if (throwable != null) LOGGER.debug(formatted, throwable);
+                else LOGGER.debug(formatted);
+            }
+            case INFO -> {
+                if (throwable != null) LOGGER.info(formatted, throwable);
+                else LOGGER.info(formatted);
+            }
+            case WARN -> {
+                if (throwable != null) LOGGER.warn(formatted, throwable);
+                else LOGGER.warn(formatted);
+            }
+            case ERROR -> {
+                if (throwable != null) LOGGER.error(formatted, throwable);
+                else LOGGER.error(formatted);
+            }
         }
 
     }
